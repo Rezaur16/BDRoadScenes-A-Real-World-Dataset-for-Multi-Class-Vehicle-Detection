@@ -39,39 +39,12 @@ A typical object detection dataset structure is as follows:
 ```text
 BDRoadScenes/
 ├── images/
-│   ├── train/
-│   ├── val/
-│   └── test/
-├── labels/
-│   ├── train/
-│   ├── val/
-│   └── test/
-├── data.yaml (or equivalent config)
 └── BDRoadScenes.ipynb
 ```
 
 ### What each folder means
 
 - **images/**: Road scene image files  
-- **labels/**: Annotation files containing object class + bounding box information  
-- **train/ val/ test/**:
-  - **train** → used to teach the model  
-  - **val** → used to tune model performance during training  
-  - **test** → used for final unbiased evaluation
-
----
-
-## 🧪 Workflow shown in the notebook
-
-The notebook is used as the main working file for the project pipeline.  
-Typical steps include:
-
-1. Loading dataset paths and files  
-2. Reading image-label pairs  
-3. Verifying class annotations  
-4. Preparing data splits (train/validation/test)  
-5. Training or testing a detection model  
-6. Evaluating model performance
 
 ---
 
@@ -101,18 +74,6 @@ If dependency errors appear, install missing packages with:
 pip install <package-name>
 ```
 
----
-
-## 📈 Suggested evaluation metrics
-
-For multi-class vehicle detection, commonly used metrics include:
-
-- **mAP (mean Average Precision)**
-- **Precision**
-- **Recall**
-- **Per-class AP**
-
-These metrics help measure both overall detection quality and class-wise performance.
 
 ---
 
