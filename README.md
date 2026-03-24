@@ -1,109 +1,98 @@
-# BDRoadScenes: A Real-World Dataset for Multi-Class Vehicle Detection
+# BDRoadScenes Image Privacy Tool
 
-BDRoadScenes is a real-world road scene dataset designed for **multi-class vehicle detection** research.  
-It focuses on traffic scenarios commonly found on roads in Bangladesh and can be used to train and evaluate computer vision models for object detection.
+This project helps you protect people’s privacy in road photos.
 
----
+It uses [BDRoadScenes.ipynb](BDRoadScenes.ipynb) to:
+- find faces in each image,
+- blur only the face area,
+- keep cars, bikes, roads, and other objects clear,
+- shuffle images in a repeatable way,
+- rename all output images as 001, 002, 003, ...,
+- save a file that shows old name to new name.
 
-## 📌 Why this dataset matters
+## What problem this solves
 
-Many public traffic datasets are collected in different countries and may not represent local road conditions in Bangladesh (e.g., mixed traffic patterns, vehicle diversity, and challenging road environments).  
-**BDRoadScenes** helps researchers and developers build models that are more suitable for these real-world local scenarios.
+Road photos can include people. Before sharing or training with this data, it is safer to hide faces.
 
----
+This notebook does that automatically for the full dataset.
 
-## 🎯 Main objective
+## Easy summary
 
-The dataset is intended for:
+- Input folder: [Vehicles](Vehicles)
+- Output folder: [updated_datasets](updated_datasets)
+- Output image names: 001.jpg to 500.jpg
+- Mapping file: updated_datasets/mapping.csv
 
-- Detecting multiple types of vehicles in road images
-- Training object detection models
-- Benchmarking and comparing detection performance
-- Supporting research in intelligent transportation and traffic monitoring
-
----
-
-## 🚗 Vehicle categories (multi-class)
-
-The dataset is organized for **multi-class detection**, meaning each detected object belongs to a specific vehicle class (for example: car, bus, truck, motorcycle, etc., depending on the annotation schema used in the project).
-
-> If you use this dataset in a model pipeline, make sure your class names exactly match the annotation labels.
-
----
-
-## 🗂️ Dataset structure (general)
-
-The project notebook (`BDRoadScenes.ipynb`) demonstrates dataset usage and processing workflow.  
-A typical object detection dataset structure is as follows:
+## Folder structure
 
 ```text
-BDRoadScenes/
-├── images/
-└── BDRoadScenes.ipynb
+vechicals_works/
+|-- BDRoadScenes.ipynb
+|-- README.md
+|-- LICENSE
+|-- Vehicles/
+|-- updated_datasets/
+|   |-- 001.jpg
+|   |-- 002.jpg
+|   |-- ...
+|   |-- 500.jpg
+|   `-- mapping.csv
+`-- updated_datasets.zip
 ```
 
-### What each folder means
+## How it works
 
-- **images/**: Road scene image files  
+1. It reads all images from the Vehicles folder.
+2. It shuffles the list of images.
+3. For each image:
+   - If a face is found, it blurs only the face.
+   - If no face is found, it still saves the image.
+4. It saves all images into updated_datasets with serial names.
+5. It creates mapping.csv so you can track original file names.
 
----
+## What you need
 
-## ⚙️ How to use this project
+- Python 3.10+
+- Jupyter Notebook (VS Code or Colab)
+- OpenCV
 
-1. Clone this repository
-2. Open `BDRoadScenes.ipynb` in Jupyter Notebook / JupyterLab / Google Colab
-3. Update dataset paths if needed
-4. Run cells step by step
-5. Train/evaluate your detection model
-
----
-
-## ✅ Recommended environment
-
-- Python 3.8+
-- Jupyter Notebook
-- Common ML libraries (depending on notebook code), such as:
-  - `numpy`
-  - `pandas`
-  - `matplotlib`
-  - deep learning framework packages used in the notebook
-
-If dependency errors appear, install missing packages with:
+Install OpenCV:
 
 ```bash
-pip install <package-name>
+pip install opencv-python
 ```
 
+## Run steps
 
----
+Open [BDRoadScenes.ipynb](BDRoadScenes.ipynb):
 
-## 🤝 Who can use this dataset?
+1. Run Cell 1 (find dataset and count images).
+2. Run Cell 3 (face blur + save output).
+3. Run Cell 4 if you want extension statistics.
 
-This dataset is useful for:
+After that, check [updated_datasets](updated_datasets).
 
-- Researchers in computer vision and transport AI
-- University students working on thesis/projects
-- Developers building smart traffic systems
-- Anyone interested in real-world vehicle detection in South Asian road conditions
+## Important settings (Cell 3)
 
----
+- MAX_IMAGES = None means process all images.
+- CLEAR_OUTPUT_FOLDER = True means remove old output before new run.
+- SHUFFLE_IMAGES = True means random order.
+- SHUFFLE_SEED = 42 means same random order every time.
 
-## 📜 License
+## mapping.csv columns
 
-This repository includes a license file:
+- serial: output serial number
+- new_name: output image file name
+- original_path: original file path
+- faces_detected: number of faces blurred
 
-- [LICENSE](./LICENSE)
+## Troubleshooting
 
-Please check license terms before redistribution or commercial use.
+- If cv2 error appears: run pip install opencv-python and rerun.
+- If folder not found: check path values in Cell 1.
+- If too many wrong face detections: increase MIN_NEIGHBORS.
+- If faces are missed: reduce MIN_FACE_SIZE.
 
----
+## License
 
-## 📚 Citation
-
-If you use this dataset in your research, please cite this repository and acknowledge the authors appropriately.
-
----
-
-## 🙌 Acknowledgment
-
-Thanks to everyone involved in collecting, preparing, and organizing real-world road scene data for advancing traffic AI research.
+This project is licensed under the MIT License. See [LICENSE](LICENSE).
