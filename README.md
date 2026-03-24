@@ -85,6 +85,10 @@ After that, check [updated_datasets](updated_datasets).
 - new_name: output image file name
 - original_path: original file path
 - faces_detected: number of faces blurred
+  
+## Dataset Workflow
+
+![Dataset Creation](vehicles.jfif)
 
 ## Troubleshooting
 
